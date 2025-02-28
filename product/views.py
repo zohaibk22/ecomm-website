@@ -29,6 +29,7 @@ def index(request):
 
 
 def detail(request, prod_id):
+    print("ZOHAIB TESTING")
     item = Product.objects.get(id=prod_id) or None
     context = {"product": item}
 
