@@ -16,7 +16,7 @@
                         <button class="btn btn-error" type="submit" name="clear">Clear</button>
                     </div>
                 </div>
-            </div>
+            </form>
         </div>
    
 </div>
@@ -33,7 +33,7 @@
                         ${{product.price}}
                     </div>
                     <a class="btn btn-warning"  href='/detail/item/{{product.id}}'>View</a>
-                    <a class="btn btn-warning" href='/detail/item/{{product.id}}'>Add to cart</a>
+                    <button id={{product.id}} class="atc btn btn-warning" >Add to cart</button>
                     
                      
                 </div>
@@ -68,5 +68,49 @@
             </div>
         </div>
 </div>
+<script type="text/javascript">
+    $(document).ready(function() {
+        console.log("Hello worl;d")
+        //  let cart_val = {};
+
+        if(!localStorage.getItem('cart')){
+            let cart_val = {};
+            localStorage.setItem('cart', JSON.stringify(cart_val));
+        }
+        else {
+            cart_val = JSON.parse(localStorage.getItem('cart'))
+        }
+
+        $(document).on('click', '.atc', function(){
+
+            var item_id = this.id.toString();
+            console.log(this, "THIS")
+            console.log(item_id, "item ID")
+            console.log('Add to cart btn')
+
+            if(cart_val[item_id]){
+                cart_val[item_id] += 1
+            }
+            else {
+                cart_val[item_id] = 1;
+            }
+
+            console.log(cart_val, "CART")
+
+            localStorage.setItem('cart', JSON.stringify(cart_val));
+
+            var numOfItems = Object.entries(cart_val).reduce((acc, curr) => {
+                console.log(acc, "acc")
+                return acc+= curr[1]
+
+            }, 0)
+            console.log(numOfItems, "num of items")
+
+            // window.location.reload();
+        })
+
+        
+});
+</script>
 {% endblock %}
 
