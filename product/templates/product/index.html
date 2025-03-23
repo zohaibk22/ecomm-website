@@ -105,6 +105,20 @@
 
             }, 0)
             console.log(numOfItems, "num of items")
+            if (numOfItems){
+                document.getElementById("cart").innerHTML = `Cart (${numOfItems})`
+            }
+
+            const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+            const popoverList = [...popoverTriggerList].map(popoverTriggerEl => {
+
+                return new bootstrap.Popover(popoverTriggerEl)
+                // console.log(test, "test")
+                // return test
+                
+            })
+            
+           
 
             // window.location.reload();
         })
