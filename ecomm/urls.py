@@ -21,6 +21,7 @@ from product import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', view=views.index, name='product-index'),
-    path('detail/', include("product.urls"))  
+    path('detail/', include("product.urls")),
+    path('checkout/' , view=views.checkout, name='checkout')
 
 ]

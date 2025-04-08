@@ -35,4 +35,7 @@ def detail(request, prod_id):
 
     return render(request=request,template_name='product/detail.html', context=context)
 
+def checkout(request):
+    return render(request=request, template_name="product/checkout.html", context={})
+
 
