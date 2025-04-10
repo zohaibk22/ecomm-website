@@ -90,11 +90,16 @@
             console.log('Add to cart btn')
 
             if(cart_val[item_id]){
-                cart_val[item_id] += 1
+                cart_val[item_id]['qty'] += 1
+            } else{
+                const itemName = document.getElementById(`nm${item_id}`).innerText.trim();
+                cart_val[item_id] = {
+                    'qty': 1,
+                    'name': itemName
+                };
+
             }
-            else {
-                cart_val[item_id] = 1;
-            }
+            
 
             console.log(cart_val, "CART")
 
@@ -102,7 +107,8 @@
 
             var numOfItems = Object.entries(cart_val).reduce((acc, curr) => {
                 console.log(acc, "acc")
-                return acc+= curr[1]
+                console.log(curr,"curr")
+                return acc+= curr[1]['qty']
 
             }, 0)
             console.log(numOfItems, "num of items")
@@ -125,12 +131,11 @@
             if (!Object.keys(items).length) {
                 cartContent = "<h5>Cart is empty</h5>"
             } else {
-
-                for (const [itemId, quantity] of Object.entries(items)){
-                console.log(quantity, "item ID")
+                for (const [itemId, { qty, name }] of Object.entries(items)){
+                console.log(itemId, "VAL VAL")
                 const currItem = document.getElementById(`nm${itemId}`)
                 const itemName = currItem.innerHTML
-                cartContent += `<p>${itemName}: ${quantity}</p>`
+                cartContent += `<p>${itemName}: ${qty}</p>`
 
                 }
                 cartContent += "<a href='/checkout' class='btn btn-warning' id='checkout'>Checkout</a>"

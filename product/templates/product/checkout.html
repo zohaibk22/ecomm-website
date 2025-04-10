@@ -1,5 +1,37 @@
 {% extends 'product/base.html' %}
 {% block body%}
-<h2>Checkout Page</h2>
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <ul class="list-group" id="cart-list">
+</ul>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function(){
+        let cart = JSON.parse(localStorage.getItem('cart')) || {};
+        console.log(cart, "cart")
+        let cart_divs = ""
+
+        if (!Object.keys(cart).length){
+            cart_divs = "<div class='col-md-12'>No items in cart</div>"
+        }
+        else {
+            for (const [item_id, {qty, name}] of Object.entries(cart)){
+                cart_divs += `<li class='list-group-item d-flex justify-content-between align-items-center'>${name} <span class='badge bg-primary rounded-pill'>${qty}</span> </li>`
+            }
+        }
+        console.log(cart_divs, "cart divs")
+        const checkout_div = document.getElementById('cart-list')
+        checkout_div.innerHTML = cart_divs
+
+       
+
+
+        
+    })
+</script>
 
 {% endblock%}
