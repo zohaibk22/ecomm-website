@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Product
+from .models import Product, Order
 from django.core.paginator import Paginator
 from django.shortcuts import get_object_or_404
 
@@ -36,6 +36,23 @@ def detail(request, prod_id):
     return render(request=request,template_name='product/detail.html', context=context)
 
 def checkout(request):
+    if request.method == 'POST':
+        name = request.POST.get('name', "")
+        email = request.POST.get('email', "")
+        address = request.POST.get('address', "")
+        address2 = request.POST.get('address2', "")
+        city = request.POST.get('city', "")
+        state = request.POST.get('state', "")
+        zip = request.POST.get('zip', "")
+
+        order = Order(name=name, email=email, address=address, address2=address2, city=city, state=state, zip_code=zip)
+        try:
+
+            order.save()
+        except Exception as e:
+            print(f"Error saving order: {e}")
+            return render(request=request, template_name="product/checkout.html", context={"error": "There was an error processing your order. Please try again."})
+
     return render(request=request, template_name="product/checkout.html", context={})
 
 
