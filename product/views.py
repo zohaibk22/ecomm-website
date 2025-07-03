@@ -37,6 +37,7 @@ def detail(request, prod_id):
 
 def checkout(request):
     if request.method == 'POST':
+        items = request.POST.get('items', '')
         name = request.POST.get('name', "")
         email = request.POST.get('email', "")
         address = request.POST.get('address', "")
@@ -45,7 +46,7 @@ def checkout(request):
         state = request.POST.get('state', "")
         zip = request.POST.get('zip', "")
 
-        order = Order(name=name, email=email, address=address, address2=address2, city=city, state=state, zip_code=zip)
+        order = Order(items=items, name=name, email=email, address=address, address2=address2, city=city, state=state, zip_code=zip)
         try:
 
             order.save()

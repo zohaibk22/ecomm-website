@@ -78,8 +78,11 @@
         const checkout_div = document.getElementById('cart-list')
         checkout_div.innerHTML = cart_divs
 
+        $('#items').val(JSON.stringify(cart))
+
         
     })
+
 </script>
 
 {% endblock%}
