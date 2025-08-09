@@ -29,7 +29,7 @@
                     <h5 id="nm{{product.id}}" class="card-title">
                         {{product.name}}
                     </h5>
-                    <div class="card-text">
+                    <div class="card-text" id="price{{product.id}}">
                         ${{product.price}}
                     </div>
                     <a class="btn btn-warning"  href='/detail/item/{{product.id}}'>View</a>
@@ -88,14 +88,17 @@
             console.log(this, "THIS")
             console.log(item_id, "item ID")
             console.log('Add to cart btn')
+            price = parseInt(document.getElementById(`price${item_id}`).innerText.trim().split('$')[1])
 
             if(cart_val[item_id]){
                 cart_val[item_id]['qty'] += 1
+                cart_val[item_id]['price'] += price
             } else{
                 const itemName = document.getElementById(`nm${item_id}`).innerText.trim();
                 cart_val[item_id] = {
                     'qty': 1,
-                    'name': itemName
+                    'name': itemName,
+                    price,
                 };
 
             }
