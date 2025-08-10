@@ -82,8 +82,6 @@
         }
 
         $(document).on('click', '.atc', function(){
-            
-
             var item_id = this.id.toString();
             console.log(this, "THIS")
             console.log(item_id, "item ID")
@@ -125,9 +123,10 @@
         })
       
            
-        displayCart()
+     
 
         function displayCart() {
+            console.trace("Display cart called")
             const items = JSON.parse(localStorage.getItem('cart'));
             console.log(items, "items")
             let cartContent = "<h2>Your Cart</h2>";
@@ -137,22 +136,15 @@
                 for (const [itemId, { qty, name }] of Object.entries(items)){
                 console.log(itemId, "VAL VAL")
                 const currItem = document.getElementById(`nm${itemId}`)
-                const itemName = currItem.innerHTML
-                cartContent += `<p>${itemName}: ${qty}</p>`
+    
+                cartContent += `<p>${name}: ${qty}</p>`
 
                 }
                 cartContent += "<a href='/checkout' class='btn btn-warning' id='checkout'>Checkout</a>"
                 cartContent += "<a href='/clear' class='btn btn-error' id='clear'>Clear</a>"
-
-
-
             }
 
             console.log(cartContent, "cart content")
-            
-            
-            
-
             
             const popoverTrigger = $('[data-bs-toggle="popover"]');
             popoverTrigger.popover();
@@ -167,6 +159,7 @@
             }
 
     }
+    displayCart()
 
            
        

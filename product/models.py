@@ -25,6 +25,7 @@ class Order(models.Model):
     city = models.CharField(max_length=200)
     state = models.CharField(max_length=200)
     zip_code = models.CharField(max_length=20)
+    total_price = models.FloatField(default=0.0)
 
     def __str__(self):
         return f"Order by {self.name} - {self.email}"

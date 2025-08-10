@@ -45,10 +45,10 @@ def checkout(request):
         city = request.POST.get('city', "")
         state = request.POST.get('state', "")
         zip = request.POST.get('zip', "")
+        total= request.POST.get('total_price', 0.0)
 
-        order = Order(items=items, name=name, email=email, address=address, address2=address2, city=city, state=state, zip_code=zip)
+        order = Order(items=items, name=name, email=email, address=address, address2=address2, city=city, state=state, zip_code=zip, total_price=total)
         try:
-
             order.save()
         except Exception as e:
             print(f"Error saving order: {e}")

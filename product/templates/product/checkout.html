@@ -10,53 +10,57 @@
         <div class="col-md-12">
             <form method="POST">
                 {% csrf_token %}
+                <!-- Adding hidden elements to append data in with JS Script -->
                 <input type="hidden" name="items" id="items">
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                <label for="inputEmail4">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+                <input type="hidden" name="total_price" id="total_price">
+                
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputEmail4">Name</label>
+                        <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="inputPassword4">Email</label>
+                        <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                    </div>
                 </div>
-                <div class="form-group col-md-6">
-                <label for="inputPassword4">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Email" name="email">
+                <div class="form-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" class="form-control" id="address" placeholder="1234 Main St" name="address">
                 </div>
-            </div>
-            <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="address" placeholder="1234 Main St" name="address">
-            </div>
-            <div class="form-group">
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor" name="address2">
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
+                <div class="form-group">
+                    <label for="inputAddress2">Address 2</label>
+                    <input type="text" class="form-control" id="address2" placeholder="Apartment, studio, or floor" name="address2">
                 </div>
-                <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="inputCity">City</label>
+                        <input type="text" class="form-control" id="inputCity">
+                    </div>
+                    <div class="form-group col-md-4">
+                        <label for="inputState">State</label>
                     <!-- <select id="inputState" class="form-control">
                         <option selected>Choose...</option>
                         <option>...</option>
                     </select> -->
-                    <input type="text" class="form-control" id="state" placeholder="State">
+                        <input type="text" class="form-control" id="state" placeholder="State">
+                    </div>
+                    <div class="form-group col-md-2">
+                        <label for="inputZip">Zip</label>
+                        <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip">
                 </div>
-                <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
-                    <input type="text" class="form-control" id="zip" name="zip" placeholder="Zip">
                 </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="gridCheck">
-                <label class="form-check-label" for="gridCheck">
-                    Check me out
-                </label>
+                <div class="form-group">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck">
+                        <label class="form-check-label" for="gridCheck">
+                        Check me out
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <button type="submit" class="btn btn-primary">Place Order</button>
-        </form>
+
+                <button type="submit" class="btn btn-primary">Place Order</button>
+            </form>
         </div>
 </div>
 
@@ -65,20 +69,25 @@
         let cart = JSON.parse(localStorage.getItem('cart')) || {};
         console.log(cart, "cart")
         let cart_divs = ""
+        let totalPrice= 0
 
         if (!Object.keys(cart).length){
             cart_divs = "<div class='col-md-12'>No items in cart</div>"
         }
         else {
-            for (const [item_id, {qty, name}] of Object.entries(cart)){
-                cart_divs += `<li class='list-group-item d-flex justify-content-between align-items-center'>${name} <span class='badge bg-primary rounded-pill'>${qty}</span> </li>`
+            for (const [item_id, {qty, name, price}] of Object.entries(cart)){
+                totalPrice += price
+                cart_divs += `<li class='list-group-item d-flex justify-content-between align-items-center'>${name} <span class='badge bg-primary rounded-pill'>${qty}</span><span class='badge bg-secondary rounded-pill'>$${price}</span></li>`
             }
         }
+
+        cart_divs += `<li class='list-group-item d-flex justify-content-between align-items-center active'>Total Price <span class='badge bg-secondary rounded-pill'>$${totalPrice}</span></li>`
         console.log(cart_divs, "cart divs")
         const checkout_div = document.getElementById('cart-list')
         checkout_div.innerHTML = cart_divs
 
         $('#items').val(JSON.stringify(cart))
+        $('#total_price').val(totalPrice)
 
         
     })
